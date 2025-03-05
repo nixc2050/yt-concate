@@ -55,9 +55,9 @@ class DownloadCaptions(Step):
 
         text_lines = []
         for line in lines:
-            # 移除時間戳記（例如 00:01.500 --> 00:04.000）
-            if re.match(r"\d+:\d+:\d+\.\d+", line):
-                continue
+            # # 移除時間戳記（例如 00:01.500 --> 00:04.000）
+            # if re.match(r"\d+:\d+:\d+\.\d+", line):
+            #     continue
             # 移除 VTT 標籤（可能有 <c> 或 </c> 這類標籤）
             line = re.sub(r"<[^>]+>", "", line)
             text_lines.append(line.strip())
