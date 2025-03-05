@@ -16,9 +16,9 @@ def main():
     }
 
     steps = [
-        # Preflight(),
-        # GetVideoList(),
-        # DownloadCaptions(),
+        Preflight(),
+        GetVideoList(),
+        DownloadCaptions(),
         ReadCaption(),
         Postflight(),
     ]
