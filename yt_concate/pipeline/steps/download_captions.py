@@ -12,14 +12,14 @@ class DownloadCaptions(Step):
     def process(self, data, inputs, utils):
 
         lang = "en"
-        for url in data:
-            print('downloading caption for', url)
-            if utils.caption_file_exists(url):
+        for yt in data:
+            print('downloading caption for', yt.id)
+            if utils.caption_file_exists(yt):
                 print('found existing caption file')
                 continue
             try:
-                video_id = utils.get_video_id_from_url(url)
-                output_txt = utils.get_caption_filepath(url)  # 設定 TXT 檔名
+                video_id = yt.id
+                output_txt = yt  # 設定 TXT 檔名
 
                 ydl_opts = {
                     'writesubtitles': True,
@@ -33,9 +33,9 @@ class DownloadCaptions(Step):
                 }
 
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([url])
+                    ydl.download([yt.url])
             except yt_dlp.utils.DownloadError as e:
-                print(e, url)
+                print(e, yt)
                 continue
             # ** 自動尋找下載的字幕檔案**
             vtt_files = glob.glob(os.path.join(CAPTIONS_DIR, f"{video_id}*.vtt")) # 搜尋符合條件的 VTT 檔案
@@ -46,6 +46,8 @@ class DownloadCaptions(Step):
                 self.vtt_to_txt(vtt_file, output_txt)  # 轉換字幕
             else:
                 print("❌ 無法找到字幕檔案，可能該影片無字幕。")
+        return data
+
 
     def vtt_to_txt(self, vtt_file, txt_file):
         """將 VTT 字幕轉換為純文字 TXT"""
