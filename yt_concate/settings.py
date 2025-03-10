@@ -12,3 +12,4 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 取得 `settings.py` �
 DOWNLOADS_DIR = os.path.join(BASE_DIR, 'downloads')  # downloads 確保在專案內
 VIDEOS_DIR = os.path.join(DOWNLOADS_DIR, 'videos')
 CAPTIONS_DIR = os.path.join(DOWNLOADS_DIR, 'captions')
+OUTPUT_DIR = os.path.join(BASE_DIR,  'outputs')

@@ -30,3 +30,4 @@ class DownloadVideos(Step):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
 
+        return data
