@@ -1,5 +1,6 @@
 # download_captions.py
 import os
+import time
 import re
 import glob
 import yt_dlp
@@ -10,7 +11,7 @@ from yt_concate.pipeline.steps.step import Step, StepException
 
 class DownloadCaptions(Step):
     def process(self, data, inputs, utils):
-
+        start = time.time()
         lang = "en"
         for yt in data:
             print('downloading caption for', yt.id)
@@ -46,6 +47,10 @@ class DownloadCaptions(Step):
                 self.vtt_to_txt(vtt_file, output_txt)  # 轉換字幕
             else:
                 print("❌ 無法找到字幕檔案，可能該影片無字幕。")
+
+        end = time.time()
+        print('took', end - start, 'seconds')
+
         return data
 
 

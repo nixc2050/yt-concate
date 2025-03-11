@@ -1,7 +1,7 @@
 # edit_video.py
 from .step import Step
 
-from moviepy import VideoFileClip, CompositeVideoClip
+from moviepy import VideoFileClip, concatenate_videoclips
 
 class EditVideo(Step):
     def process(self, data, inputs, utils):
@@ -23,9 +23,9 @@ class EditVideo(Step):
                 break
 
         # Overlay the text clip on the first video clip
-        final_video = CompositeVideoClip(clips)
+        final_video = concatenate_videoclips(clips, method="compose")
         output_filepath = utils.get_output_filepath(inputs['channel_id'], inputs['search_word'])
-        final_video.write_videofile(output_filepath)
+        final_video.write_videofile(output_filepath, audio_codec="aac")
 
 
 
