@@ -1,7 +1,9 @@
 from .step import Step
 
+from yt_concate.settings import logger
 
+log = logger
 class Postflight(Step):
     def process(self, data, inputs, utils):
-        print('in Postflight')
+        log.info('in Postflight')
 

@@ -3,13 +3,16 @@ import urllib.request
 import json
 from yt_concate.pipeline.steps.step import Step, StepException
 from yt_concate.settings import API_KEY
+from yt_concate.settings import logger
+
+log = logger
 
 class GetVideoList(Step):
     def process(self, data, inputs, utils):
         channel_id = inputs['channel_id']
 
         if utils.video_list_file_exists(channel_id):
-            print('found existing video_list file')
+            log.info('found existing video_list file')
             return self.read_file(utils.get_video_list_filepath(channel_id))
 
         api_key = API_KEY
@@ -33,7 +36,7 @@ class GetVideoList(Step):
                 url = first_url + '&pageToken={}'.format(next_page_token)
             except KeyError:
                 break
-        print(video_links)
+        log.info(video_links)
         self.write_to_file(video_links, utils.get_video_list_filepath(channel_id))
         return video_links
 
